@@ -11,7 +11,7 @@ Card Game
     Deck of Cards API
 
 
--Game
+Game
     Users
         Avatars
             http://avatars.adorable.io/
