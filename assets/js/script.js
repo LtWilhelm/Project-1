@@ -13,3 +13,22 @@ let database = firebase.database();
 
 database.ref('wargame/users').set('');
 // TODO push new users to firebase (wargame/users)
+
+
+// ajax request for insults
+$("button").on("click", function(){
+  let insults = $(this).attr("data-random");
+  let queryURL = "https://lakerolmaker-insult-generator-v1.p.rapidapi.com/?mode=random" + insults +
+        "&api_key=e81fe77619msh2471c50a974c11ap1de96ejsn5cd6e19541c6";
+  
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    .then(function(response){
+      console.log(queryURL);
+      console.log(response);
+    })
+
+
+})
