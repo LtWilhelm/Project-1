@@ -13,3 +13,13 @@ let database = firebase.database();
 
 database.ref('wargame/users').set('');
 // TODO push new users to firebase (wargame/users)
+
+$('#test').on('click', function(){
+    unirest.get("https://lakerolmaker-insult-generator-v1.p.rapidapi.com/?mode=random")
+.header("X-RapidAPI-Host", "lakerolmaker-insult-generator-v1.p.rapidapi.com")
+.header("X-RapidAPI-Key", "8b6a11da3amsh22c8752de3dfc39p18a004jsn22160229d123")
+.end(function (result) {
+  console.log(result.status, result.headers, result.body);
+});
+});
+
