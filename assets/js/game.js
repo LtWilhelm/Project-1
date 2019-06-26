@@ -21,10 +21,12 @@ $(document).ready(function () {
             }).then(function (player1) {
                 console.log(player1)
                 $.ajax({
-                    url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player1/draw/?cards=" + pile1[0],
+                    url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player1/draw/?cards=",
                     method: "GET"
                 }).then(function (draw) {
                     console.log(draw)
+                    convertValue(draw.cards[0].value)
+
                 })
             })
         })
@@ -44,10 +46,11 @@ $(document).ready(function () {
             }).then(function (player2) {
                 console.log(player2)
                 $.ajax({
-                    url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player2/draw/?cards=" + pile2[0],
+                    url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player2/draw/",
                     method: "GET"
                 }).then(function (draw) {
                     console.log(draw)
+                    convertValue(draw.cards[0].value)
                 })
             })
         })
@@ -70,6 +73,14 @@ $(document).ready(function () {
             default:
                 parseInt(card);
                 break;
+        }
+    }
+
+    function compareValue(card1, card2){
+        if (card1 >= card2){
+            console.log('Player 1 wins round')
+        } else {
+            console.log('player 2 wins round')
         }
     }
 })
