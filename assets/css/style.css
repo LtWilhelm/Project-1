@@ -42,6 +42,12 @@ h1 {
     background-color: darkgray;
 }
 
+#game-cards {
+    height: 450px;
+    overflow-y: scroll;
+    box-shadow: 0 0 5px inset;
+}
+
 #game-container {
     margin: 1em;
     width: 40%;
