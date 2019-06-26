@@ -52,4 +52,24 @@ $(document).ready(function () {
             })
         })
     })
+
+    function convertValue(card) {
+        switch (card) {
+            case 'ACE':
+                return 14;
+                break;
+            case 'KING':
+                return 13;
+                break;
+            case 'QUEEN':
+                return 12;
+                break;
+            case 'JACK':
+                return 11;
+                break;
+            default:
+                parseInt(card);
+                break;
+        }
+    }
 })
