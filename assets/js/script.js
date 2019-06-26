@@ -16,19 +16,24 @@ database.ref('wargame/users').set('');
 
 
 // ajax request for insults
-$("button").on("click", function(){
-  let insults = $(this).attr("data-random");
-  let queryURL = "https://lakerolmaker-insult-generator-v1.p.rapidapi.com/?mode=random" + insults +
-        "&api_key=e81fe77619msh2471c50a974c11ap1de96ejsn5cd6e19541c6";
-  
+let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
+let compliment = "https://complimentr.com/api";
+let wins = 0;
+
+// create a function for AJAX request
+function generateInsult() {
   $.ajax({
-    url: queryURL,
+    url: corsInsultApi,
     method: "GET"
+  }).then(function(response){
+    console.log(response);
+
+    let results = response;
   })
-    .then(function(response){
-      console.log(queryURL);
-      console.log(response);
-    })
 
-
-})
+}
+// crete a variable to hold wins counter
+// create a coniditional = for every 3 wins, choose to insult or compliment
+// find a way to disable a button until coniditional is fulfilled
+// have the button turn from red to green when condition is fulfilled
+// create a event listener button
