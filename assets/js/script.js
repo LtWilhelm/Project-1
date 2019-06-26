@@ -13,3 +13,4 @@ let database = firebase.database();
 
 database.ref('wargame/users').set('');
 // TODO push new users to firebase (wargame/users)
+

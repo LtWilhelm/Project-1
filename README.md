@@ -14,7 +14,7 @@
     Game
         Users
             Avatars
-                http://avatars.adorable.io/
+                https://avatars.dicebear.com/
             User Names
                 https://github.com/thm/uinames
             Win History
