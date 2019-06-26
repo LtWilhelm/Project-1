@@ -1,6 +1,7 @@
 let gameName;
 let gameList = ['placeholder'];
 let userName = 'test';
+let user;
 let wins = 0;
 let losses = 0;
 
@@ -20,30 +21,57 @@ firebase.initializeApp(firebaseConfig);
 let database = firebase.database();
 
 /* #endregion */
-database.ref('wargame/users').set('');
-// TODO push new users to firebase (wargame/users)
 
-database.ref('wargame').once('value').then(function(snapshot) {
-  console.log(snapshot.val());
+// TODO push new users to firebase (wargame/users)
+database.ref('wargame/gameList').on('value', function (snapshot) {
+  let data = snapshot.val();
+  gameList = data;
 });
 
-function createDBListeners () {
-  database.ref('wargame/games/' + gameName).on('value', function(snapshot){
+initializeGame();
+
+/* #region  func dec */
+function initializeGame() {
+  if (document.title.includes('Game')) {
+    name = sessionStorage.name;
+    gameName = sessionStorage.game;
+    createDBListeners();
+    console.log('works');
+  }
+}
+
+function createDBListeners() {
+  database.ref('wargame/games/' + gameName).on('value', function (snapshot) {
     let data = snapshot.val();
-    console.log(data);
     if (data.user1.status && data.user2.status) {
       database.ref('wargame/games/' + gameName + '/isOpen').set(false);
     }
   });
 }
 
-function joinGame () {
-  // window.location.href = './game.html';
-  console.log(gameName);
-  createDBListeners();
+function joinGame() {
+  database.ref('wargame/games/' + gameName).once('value').then(function(snapshot){
+    let data = snapshot.val();
+    if (!data.user1.status) {
+      user = 'user1';
+    } else if (!data.user2.status) {
+      user = 'user2';
+    } else {
+      console.error('It broke...')
+    }
+    if (user) {
+      database.ref('wargame/games/' + gameName + '/' + user + '/name').set(userName);
+      database.ref('wargame/games/' + gameName + '/' + user + '/status').set(true);
+      console.log('happy days', user)
+    }
+    sessionStorage.setItem('user', user);
+  });
+  sessionStorage.setItem('name', userName);
+  sessionStorage.setItem('game', gameName);
+  window.location.href = './game.html';
 }
 
-function findGame (mode) {
+function findGame(mode) {
   switch (mode) {
     case 'random':
       (function () {
@@ -54,20 +82,20 @@ function findGame (mode) {
 
 function createGame(name) {
   gameName = name;
-  
-  database.ref('wargame/games/' + gameName).once('value').then(function(snapshot){
+
+  database.ref('wargame/games/' + gameName).once('value').then(function (snapshot) {
     console.log(snapshot.val());
     if (!snapshot.val() && gameName !== 'placeholder') {
       database.ref('wargame/games/' + gameName).set({
         isOpen: true,
         user1: {
-          name: userName,
+          name: '',
           wins: wins,
           losses: losses,
-          status: true
+          status: false
         },
         user2: {
-          name: userName,
+          name: '',
           wins: wins,
           losses: losses,
           status: false
@@ -75,6 +103,7 @@ function createGame(name) {
       });
       $('.modal').remove();
       gameList.push(gameName);
+      database.ref('wargame/gameList').set(gameList);
       joinGame();
     } else {
       $('#error').text('This game already exists, please choose a new name')
@@ -82,6 +111,35 @@ function createGame(name) {
   });
 }
 
+creatGameCards();
+function creatGameCards() {
+  database.ref('wargame/games').on('value', function(snapshot){
+    let data = snapshot.val();
+    $('#game-cards').empty();
+    gameList.forEach(e => {
+      if (e !== 'placeholder'){
+        let div = $('<div class="game-card">');
+        let h2 = $('<h2>');
+        let btn = $('<button class=join>');
+        let indicator = $('<div class=indicator>');
+        h2.text(e);
+        btn.text('Join');
+        btn.attr('data-value', e);
+        if (data[e].isOpen) {
+          indicator.attr('style', 'background-color:green');
+        } else {
+          indicator.attr('style', 'background-color:red');
+          btn.attr('disabled', true);
+        }
+        div.append(h2, btn, indicator);
+        $('#game-cards').append(div);
+      }
+    });
+  });
+}
+/* #endregion */
+
+/* #region  click handlers */
 $('#create-game').on('click', function () {
   let modal = $('<div>')
   modal.addClass('modal')
@@ -90,10 +148,15 @@ $('#create-game').on('click', function () {
 });
 $(document).on('click', '#create', function () {
   event.preventDefault();
-  let name = $('#game-name').val();
+  let name = $('#game-name').val().trim();
   if (name) {
     createGame(name);
   } else {
     $('#error').text('Please put in a game name');
   }
 });
+$('#game-cards').on('click', '.join', function(){
+  gameName = $(this).attr('data-value');
+  joinGame();
+})
+/* #endregion */
