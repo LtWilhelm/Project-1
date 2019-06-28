@@ -13,20 +13,22 @@
 </head>
 
 <body>
-    <div>
-        <div id="enemy-cards">
-            <button class="p-5"></button>
+    <div class="">
+        <div class="m-2 fixed-top">
+            <div id="enemy-cards">
+                <button class="p-5"></button>
+            </div>
         </div>
-    </div>
-    <div id="empty-draw">
-        <div id="enemy-draw"></div>
-        <div id="player-draw"></div>
-    </div>
-    <div>
-        <button id="flirt">Flirt</button>
-        <button id="insult">Insult</button>
-        <div id="player-cards">
-            <button id="play-card" class="p-5"></button>
+        <div id="empty-draw" class="m-2">
+            <div id="enemy-draw"></div>
+            <div id="player-draw"></div>
+        </div>
+        <div class="m-2 fixed-bottom d-flex justify-content-between">
+            <button id="flirt" class="m-2">Flirt</button>
+            <button id="insult" class="m-2">Insult</button>
+            <div id="player-cards d-flex justify-content-center">
+                <button id="play-card" class="p-5 d-flex"></button>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
