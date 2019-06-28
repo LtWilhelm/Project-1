@@ -19,6 +19,32 @@ database.ref('wargame/users').set('');
 let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
 let compliment = "https://complimentr.com/api";
 let wins = 0;
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
 
 // create a function for AJAX request
 function generateInsult() {
@@ -27,13 +53,10 @@ function generateInsult() {
     method: "GET"
   }).then(function(response){
     console.log(response);
-
-    let results = response;
+    $(".modal-body").html(response);
+    $("#myModal").modal('show');
   })
-
 }
-// crete a variable to hold wins counter
-// create a coniditional = for every 3 wins, choose to insult or compliment
-// find a way to disable a button until coniditional is fulfilled
-// have the button turn from red to green when condition is fulfilled
-// create a event listener button
+// event listener for the modal button
+$("button").on("click", generateInsult);
+
