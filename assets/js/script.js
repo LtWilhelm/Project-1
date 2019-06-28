@@ -20,11 +20,6 @@ firebase.initializeApp(firebaseConfig);
 
 let database = firebase.database();
 
-<<<<<<< HEAD
-database.ref('wargame/users').set('');
-// TODO push new users to firebase (wargame/users)
-
-=======
 /* #endregion */
 
 // TODO push new users to firebase (wargame/users)
@@ -165,4 +160,3 @@ $('#game-cards').on('click', '.join', function(){
   joinGame();
 })
 /* #endregion */
->>>>>>> d839143148208e30d99bd97b27dbe57a53302e86

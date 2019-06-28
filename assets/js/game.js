@@ -25,8 +25,7 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (draw) {
                     console.log(draw)
-                    convertValue(draw.cards[0].value)
-
+                    $('#player-draw').attr('data-card-value', convertValue(draw.cards[0].value))
                 })
             })
         })
@@ -43,14 +42,15 @@ $(document).ready(function () {
             $.ajax({
                 url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player2/add/?cards=" + pile2.join(","),
                 method: "GET"
-            }).then(function (player2) {
+            }).then(function drawPile2(player2) {
                 console.log(player2)
                 $.ajax({
                     url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player2/draw/",
                     method: "GET"
                 }).then(function (draw) {
                     console.log(draw)
-                    convertValue(draw.cards[0].value)
+                    $('#enemy-draw').attr('data-card-value', convertValue(draw.cards[0].value))
+
                 })
             })
         })
@@ -71,13 +71,13 @@ $(document).ready(function () {
                 return 11;
                 break;
             default:
-                parseInt(card);
+                return parseInt(card);
                 break;
         }
     }
 
-    function compareValue(card1, card2){
-        if (card1 >= card2){
+    function compareValue(user1card, user2card){
+        if (user1card >= user2card){
             console.log('Player 1 wins round')
         } else {
             console.log('player 2 wins round')
