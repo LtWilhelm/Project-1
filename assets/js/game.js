@@ -14,13 +14,14 @@ $(document).ready(function () {
             console.log(draw)
             let pile1 = []
             for (let x = 0; x < draw.cards.length; x++) {
-                console.log(draw.cards[x].code)
+                console.log(draw.cards[x].code);
                 pile1.push(draw.cards[x].code);
             }
             $.ajax({
                 url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player1/add/?cards=" + pile1.join(","),
                 method: "GET"
             }).then(function (player1) {
+                
                 console.log(player1)
                 $.ajax({
                     url: "https://deckofcardsapi.com/api/deck/" + response.deck_id + "/pile/player1/draw/?cards=",
