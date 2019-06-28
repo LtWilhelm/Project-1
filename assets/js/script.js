@@ -15,23 +15,30 @@ database.ref('wargame/users').set('');
 // TODO push new users to firebase (wargame/users)
 
 
-// ajax request for insults
+// variables 
 let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
 let compliment = "https://complimentr.com/api";
 let wins = 0;
+
 // Get the modal
-var modal = document.getElementById("myModal");
+let modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+let btn = document.getElementById("insultBtn");
+let btn2 = document.getElementById("complimentBtn");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
 btn.onclick = function() {
-  modal.style.display = "block";
+  // modal.style.display = "block";
 }
+btn2.onclick = function() {
+  // modal.style.display = "block";
+}
+
+
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
@@ -46,17 +53,33 @@ window.onclick = function(event) {
 }
 
 
-// create a function for AJAX request
+// create a function for insults AJAX request
 function generateInsult() {
   $.ajax({
     url: corsInsultApi,
     method: "GET"
   }).then(function(response){
-    console.log(response);
-    $(".modal-body").html(response);
-    $("#myModal").modal('show');
+    console.log("this is insult: " + response);
+    $("#insult-body").html(response);
+    $("#insultModal").modal("show");
   })
 }
+
+function generateCompliment() {
+  $.ajax({
+    url: compliment,
+    method: "GET"
+  }).then(function(response){
+    console.log(response);
+    $("#compliment-body").html(response.compliment);
+    $("#complimentModal").modal("show");
+  })
+}
+
+
+
+
 // event listener for the modal button
-$("button").on("click", generateInsult);
+$("#insultBtn").on("click", generateInsult);
+$("#complimentBtn").on("click", generateCompliment);
 

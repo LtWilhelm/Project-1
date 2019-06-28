@@ -6,28 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game Index</title>
-    <link rel="stylesheet" href="assets/css/reset.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-    <!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
+<!-- Trigger/Open The Modal -->
+<button id="insultBtn">insult Modal</button>
 
 <!-- The Modal -->
-<div id="myModal" class="modal">
+<div id="insultModal" class="modal" hiddens>
 
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close">&times;</span>
-    <!-- where the insult is inserted -->
-    <div class="modal-body">
-        
-    </div>
+    <div id="insult-body"></div>
   </div>
 
 </div>
 
+<!-- compliment -->
+<button id="complimentBtn">compliment Modal</button>
+
+<div id="complimentModal" class="modal">
+
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div id="compliment-body"></div>
+  </div>
+
+</div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
         <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
