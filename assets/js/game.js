@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    let playerDraw = $('#player-draw')
+    let enemyDraw = $('#enemy-draw')
     $.ajax({
         url: "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
         method: "GET"
@@ -25,7 +27,7 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (draw) {
                     console.log(draw)
-                    $('#player-draw').attr('data-card-value', convertValue(draw.cards[0].value))
+                    playerDraw.attr('data-card-value', convertValue(draw.cards[0].value))
                 })
             })
         })
@@ -49,7 +51,7 @@ $(document).ready(function () {
                     method: "GET"
                 }).then(function (draw) {
                     console.log(draw)
-                    $('#enemy-draw').attr('data-card-value', convertValue(draw.cards[0].value))
+                    enemyDraw.attr('data-card-value', convertValue(draw.cards[0].value))
 
                 })
             })
@@ -76,11 +78,22 @@ $(document).ready(function () {
         }
     }
 
-    function compareValue(user1card, user2card){
-        if (user1card >= user2card){
+    function compareValue(user1card, user2card) {
+        if (user1card >= user2card) {
             console.log('Player 1 wins round')
         } else {
             console.log('player 2 wins round')
         }
     }
+
+
+    $('#play-card').on('click', function () {
+        $('#player-draw').empty();
+        $('#enemy-draw').empty();
+        $('#player-draw').text(playerDraw.attr('data-card-value'))
+        $('#enemy-draw').text(enemyDraw.attr('data-card-value'))
+        let card1 = $('#player-draw').text(playerDraw.attr('data-card-value'))
+        let card2 = $('#enemy-draw').text(enemyDraw.attr('data-card-value'))
+        compareValue(card1, card2)
+    })
 })
