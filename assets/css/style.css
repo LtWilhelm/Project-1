@@ -38,7 +38,7 @@ h1 {
 .body-area {
     width: 800px;
     /* box-shadow: 0 0 10px; */
-    margin: 2em auto;
+    margin: 2em auto 0;
     height: fit-content;
     display: flex;
 }
@@ -126,8 +126,9 @@ input {
     height: .75em;
     width: .75em;
     border-radius: .5em;
-    border: 1px groove black;
+    /* border: 1px groove black; */
     margin: auto 0;
+    box-shadow: 0 0 10px white;
 }
 
 #random {
