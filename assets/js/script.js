@@ -6,7 +6,7 @@ let wins = 0;
 let losses = 0;
 let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
 let compliment = "https://complimentr.com/api";
-let avatarAPI = "https://avatars.dicebear.com/v2/:sprites/:seed.svg"
+let avatarAPI = "https://cors-anywhere.herokuapp.com/" + "https://avatars.dicebear.com/v2/:sprites/:seed.svg"
 
 
 
@@ -244,20 +244,21 @@ function generateCompliment() {
   })
 }
 
-// avatar function
-
+// Generate Avatar the last Gater
 function geenerateAvatar() {
     $.ajax({
         url: avatarAPI,
         method: "GET"
     }).then(function(response){
         console.log(response);
-        
+    
+
     })
 }
 
 // event listener for the modal button
 $("#insult").on("click", generateInsult);
 $("#flirt").on("click", generateCompliment);
+$("#avatar-button").on("click", geenerateAvatar);
 
 /* #endregion */
