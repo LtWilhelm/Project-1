@@ -24,11 +24,16 @@ let database = firebase.database();
 
 // TODO push new users to firebase (wargame/users)
 
-// Listener for game list
-database.ref('wargame/gameList').on('value', function (snapshot) {
-    let data = snapshot.val();
-    gameList = data;
+// All-Chat listener
+database.ref('wargame/chat').on('child_added', function (childSnapshot) {
+    console.log(childSnapshot.val());
+    let data = childSnapshot.val();
+    let p = $('<p>').html(data);
+    let ch = document.getElementById('all-chat-history')
+    $('#all-chat-history').append(p);
+    ch.scrollTop = ch.scrollHeight;    
 });
+
 
 initializeGame();
 
@@ -50,6 +55,14 @@ function createDBListeners() {
         } else if (!data.user1.status || !data.user2.status) {
             database.ref('wargame/games/' + gameName + '/isOpen').set(true);
         }
+    });
+    database.ref('wargame/games/' + gameName + '/chat').on('child_added', function (childSnapshot) {
+        console.log(childSnapshot.val());
+        let data = childSnapshot.val();
+        let p = $('<p>').html(data);
+        let ch = document.getElementById('chat-history')
+        $('#chat-history').append(p);
+        ch.scrollTop = ch.scrollHeight;    
     });
 }
 
@@ -105,6 +118,7 @@ function createGame(name) {
             database.ref('wargame/games/' + gameName).set({
                 isOpen: true,
                 gameName: gameName,
+                chat: '',
                 user1: {
                     name: '',
                     wins: wins,
@@ -164,6 +178,7 @@ $('#create-game').on('click', function () {
     modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
     $('body').append(modal);
 });
+
 $(document).on('click', '#create', function () {
     event.preventDefault();
     let name = $('#game-name').val().trim();
@@ -173,9 +188,27 @@ $(document).on('click', '#create', function () {
         $('#error').text('Please put in a game name');
     }
 });
+
 $('#game-cards').on('click', '.join', function () {
     gameName = $(this).attr('data-value');
     joinGame();
 });
+
 $('#random-game').on('click', findGame);
+
+$('#all-chat-send').on('click', function () {
+    event.preventDefault();
+    let input = $('#all-chat-input')
+    if (input.val())
+    database.ref('wargame/chat').push('<strong>' + userName + ':</strong> ' + input.val());
+    input.val('');
+});
+
+$('#chat-send').on('click', function () {
+    event.preventDefault();
+    let input = $('#chat-input')
+    if (input.val())
+    database.ref('wargame/games/' + gameName + '/chat').push('<strong>' + userName + ':</strong> ' + input.val());
+    input.val('');
+});
 /* #endregion */

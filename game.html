@@ -13,14 +13,13 @@
 </head>
 
 <body>
+    <div class="vh-100">
 
-    <div id="bg"></div>
-    <div>
-        <div id="enemy-cards">
-            
+        <div id="bg"></div>
+        <div>
+            <div id="enemy-cards">
                 <button class="p-5"></button>
             </div>
-
         </div>
         <div id="empty-draw" class="m-2">
             <div id="enemy-draw"></div>
@@ -33,6 +32,15 @@
             </div>
             <button id="insult" class="m-2">Insult</button>
 
+        </div>
+        </div>
+        <div id="chat">
+            <h2 id="chat-header">Chat</h2>
+            <div id="chat-history"></div>
+            <form id="chat-form">
+                <input type="text" id="chat-input">
+                <button id="chat-send">Send</button>
+            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
