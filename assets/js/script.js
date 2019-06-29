@@ -56,16 +56,14 @@ function createDBListeners() {
             database.ref('wargame/games/' + gameName + '/isOpen').set(true);
         }
     });
-    database.ref('wargame/chat').on('child_added', function (childSnapshot) {
+    database.ref('wargame/games/' + gameName + '/chat').on('child_added', function (childSnapshot) {
         console.log(childSnapshot.val());
         let data = childSnapshot.val();
         let p = $('<p>').html(data);
         let ch = document.getElementById('chat-history')
         $('#chat-history').append(p);
         ch.scrollTop = ch.scrollHeight;    
-        $('#show-chat').attr('style', 'background-color:red');
     });
-
 }
 
 function joinGame() {
@@ -120,6 +118,7 @@ function createGame(name) {
             database.ref('wargame/games/' + gameName).set({
                 isOpen: true,
                 gameName: gameName,
+                chat: '',
                 user1: {
                     name: '',
                     wins: wins,
@@ -202,6 +201,14 @@ $('#all-chat-send').on('click', function () {
     let input = $('#all-chat-input')
     if (input.val())
     database.ref('wargame/chat').push('<strong>' + userName + ':</strong> ' + input.val());
+    input.val('');
+});
+
+$('#chat-send').on('click', function () {
+    event.preventDefault();
+    let input = $('#chat-input')
+    if (input.val())
+    database.ref('wargame/games/' + gameName + '/chat').push('<strong>' + userName + ':</strong> ' + input.val());
     input.val('');
 });
 /* #endregion */

@@ -197,3 +197,31 @@ strong {
 .modal-content button {
     margin-left: .5em;
 }
+
+#chat {
+    width: 25%;
+    min-width: 480px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin: 1em;
+    box-shadow: 0 0 10px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-color: darkgray;  
+    transform: translateY(-50%);  
+}
+
+#chat-history {
+    width: 95%;
+    margin: 1em auto;
+    padding: .5em;
+    height: 7em;
+    background-color: lightgray;
+    overflow-y: scroll;
+    box-shadow: 0 0 5px inset;
+}
+
+#chat-form {
+    padding: 1em;
+}
