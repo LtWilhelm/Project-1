@@ -167,9 +167,9 @@ strong {
     font-weight: bold;
 }
 
-.modal {
+.cmodal {
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.4);
@@ -177,7 +177,7 @@ strong {
     height: 100%;
 }
 
-.modal-content {
+.cmodal-content {
     background-color: darkgray;
     width: 350px;
     position: relative;
@@ -190,11 +190,11 @@ strong {
     box-shadow: 0 0 10px;
 }
 
-.modal-content input {
+.cmodal-content input {
     width: 70%;
 }
 
-.modal-content button {
+.cmodal-content button {
     margin-left: .5em;
 }
 
@@ -224,4 +224,22 @@ strong {
 
 #chat-form {
     padding: 1em;
+}
+
+#login-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#login-modal button {
+    margin: .5em auto;
+}
+
+#login-modal h2 {
+    align-self: center;
+}
+
+#login-modal hr {
+    width: 100%;
 }

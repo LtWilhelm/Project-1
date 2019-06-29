@@ -8,8 +8,6 @@ let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult
 let compliment = "https://complimentr.com/api";
 let avatarAPI = "https://cors-anywhere.herokuapp.com/" + "https://avatars.dicebear.com/v2/:sprites/:seed.svg"
 
-
-
 /* #region  firebase init */
 let firebaseConfig = {
     apiKey: "AIzaSyCfu5kEk-9UxRv2-F3Qa6hELFINV1GUPVM",
@@ -29,12 +27,13 @@ let database = firebase.database();
 
 // All-Chat listener
 database.ref('wargame/chat').on('child_added', function (childSnapshot) {
-    console.log(childSnapshot.val());
     let data = childSnapshot.val();
     let p = $('<p>').html(data);
     let ch = document.getElementById('all-chat-history')
-    $('#all-chat-history').append(p);
-    ch.scrollTop = ch.scrollHeight;    
+    if (ch) {
+        $('#all-chat-history').append(p);
+        ch.scrollTop = ch.scrollHeight;    
+    }
 });
 
 
@@ -216,18 +215,17 @@ $('#chat-send').on('click', function () {
 });
 /* #endregion */
 
-
-// function for insults/compliment AJAX requests
+// create a function for insults AJAX request
 function generateInsult() {
   $.ajax({
     url: corsInsultApi,
     method: "GET"
   }).then(function(response){
     console.log(response);
-    let modal = $('<div>');
-    modal.addClass('modal');
-    modal.html('<div class="modal"><div class="modal-content" id="login-modal"><h2>' + response + '</h2></div></div>');
-    $('body').append(modal);
+    let modal = $('<div>')
+    modal.addClass('modal')
+    modal.html('<div class="modal-content"><h2>' + response + '</h2></div>');
+    $('body').prepend(modal);
   })
 }
 
@@ -237,10 +235,10 @@ function generateCompliment() {
     method: "GET"
   }).then(function(response){
     console.log(response.compliment);
-    let modal = $('<div>');
-    modal.addClass('modal');
-    modal.html('<div class="modal-content" id="login-modal"><h2>' + response.compliment + '</h2></div>s');
-    $('body').append(modal);
+    let modal = $('<div>')
+    modal.addClass('modal')
+    modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+    $('.vh-100').prepend(modal);
   })
 }
 
@@ -259,6 +257,5 @@ function geenerateAvatar() {
 // event listener for the modal button
 $("#insult").on("click", generateInsult);
 $("#flirt").on("click", generateCompliment);
-$("#avatar-button").on("click", geenerateAvatar);
 
 /* #endregion */
