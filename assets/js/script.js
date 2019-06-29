@@ -58,8 +58,10 @@ function joinGame() {
         let data = snapshot.val();
         if (!data.user1.status) {
             user = 'user1';
+            enemy = 'user2';
         } else if (!data.user2.status) {
             user = 'user2';
+            enemy = 'user1';
         } else {
             console.error('It broke...')
         }
@@ -69,6 +71,7 @@ function joinGame() {
             console.log('happy days', user)
         }
         sessionStorage.setItem('user', user);
+        sessionStorage.setItem('enemy', enemy);
     });
     sessionStorage.setItem('name', userName);
     sessionStorage.setItem('game', gameName);
@@ -116,8 +119,6 @@ function createGame(name) {
                 }
             });
             $('.modal').remove();
-            gameList.push(gameName);
-            database.ref('wargame/gameList').set(gameList);
             joinGame();
         } else {
             $('#error').text('This game already exists, please choose a new name')
@@ -154,27 +155,27 @@ function creatGameCards() {
 }
 
 
-    /* #endregion */
+/* #endregion */
 
-    /* #region  click handlers */
-    $('#create-game').on('click', function () {
-        let modal = $('<div>')
-        modal.addClass('modal')
-        modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
-        $('body').append(modal);
-    });
-    $(document).on('click', '#create', function () {
-        event.preventDefault();
-        let name = $('#game-name').val().trim();
-        if (name) {
-            createGame(name);
-        } else {
-            $('#error').text('Please put in a game name');
-        }
-    });
-    $('#game-cards').on('click', '.join', function () {
-        gameName = $(this).attr('data-value');
-        joinGame();
-    });
-    $('#random-game').on('click', findGame);
+/* #region  click handlers */
+$('#create-game').on('click', function () {
+    let modal = $('<div>')
+    modal.addClass('modal')
+    modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+    $('body').append(modal);
+});
+$(document).on('click', '#create', function () {
+    event.preventDefault();
+    let name = $('#game-name').val().trim();
+    if (name) {
+        createGame(name);
+    } else {
+        $('#error').text('Please put in a game name');
+    }
+});
+$('#game-cards').on('click', '.join', function () {
+    gameName = $(this).attr('data-value');
+    joinGame();
+});
+$('#random-game').on('click', findGame);
 /* #endregion */

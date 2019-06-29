@@ -6,7 +6,17 @@
 
 body {
     background-color: green;
+    background: radial-gradient(white, black 99%);
     font-family: 'Roboto', sans-serif;
+}
+
+#bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+    background-image: url(../images/felt-background.jpg);
+    opacity: .7;
 }
 
 small {
