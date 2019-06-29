@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <title>Mason's Game</title>
     <!-- TITLE MUST INCLUED THE WORD 'Game' OR CODE WILL NOT WORK -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/css/reset.css">
+    <!-- <link rel="stylesheet" href="./assets/css/reset.css"> -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
     <div class="vh-100">
-
         <div id="bg"></div>
         <div>
             <div id="enemy-cards">
@@ -33,16 +33,28 @@
             <button id="insult" class="m-2">Insult</button>
 
         </div>
-        </div>
-        <div id="chat">
-            <h2 id="chat-header">Chat</h2>
-            <div id="chat-history"></div>
-            <form id="chat-form">
-                <input type="text" id="chat-input">
-                <button id="chat-send">Send</button>
-            </form>
+    </div>
+    <div id="chat">
+        <h2 id="chat-header">Chat</h2>
+        <div id="chat-history"></div>
+        <hr>
+        <form id="chat-form">
+            <input type="text" id="chat-input">
+            <button id="chat-send">Send</button>
+        </form>
+    </div>
+
+    <div class="modal">
+        <div class="modal-content" id="login-modal">
+            <h2>Create new account or sign in</h2>
+            <hr>
+            <button id="new-user">Create Account</button>
+            <button id="sign-in">Sign in</button>
+            <p id="error"></p>
         </div>
     </div>
+
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>

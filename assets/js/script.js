@@ -20,18 +20,18 @@ firebase.initializeApp(firebaseConfig);
 
 let database = firebase.database();
 
-/* #endregion */
 
 // TODO push new users to firebase (wargame/users)
 
 // All-Chat listener
 database.ref('wargame/chat').on('child_added', function (childSnapshot) {
-    console.log(childSnapshot.val());
     let data = childSnapshot.val();
     let p = $('<p>').html(data);
     let ch = document.getElementById('all-chat-history')
-    $('#all-chat-history').append(p);
-    ch.scrollTop = ch.scrollHeight;    
+    if (ch) {
+        $('#all-chat-history').append(p);
+        ch.scrollTop = ch.scrollHeight;    
+    }
 });
 
 
@@ -95,7 +95,7 @@ function findGame() {
     database.ref('wargame/games').once('value').then(function (snapshot) {
         let data = snapshot.val();
         console.log(data);
-
+        
         for (const prop in data) {
             if (data.hasOwnProperty(prop)) {
                 const element = data[prop];
@@ -111,7 +111,7 @@ function findGame() {
 
 function createGame(name) {
     gameName = name;
-
+    
     database.ref('wargame/games/' + gameName).once('value').then(function (snapshot) {
         console.log(snapshot.val());
         if (!snapshot.val() && gameName !== 'placeholder') {
@@ -211,4 +211,45 @@ $('#chat-send').on('click', function () {
     database.ref('wargame/games/' + gameName + '/chat').push('<strong>' + userName + ':</strong> ' + input.val());
     input.val('');
 });
+/* #endregion */
+
+
+// variables 
+let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
+let compliment = "https://complimentr.com/api";
+
+// create a function for insults AJAX request
+function generateInsult() {
+  $.ajax({
+    url: corsInsultApi,
+    method: "GET"
+  }).then(function(response){
+    console.log(response);
+    let modal = $('<div>')
+    modal.addClass('modal')
+    modal.html('<div class="modal-content"><h2>' + response + '</h2></div>');
+    $('body').prepend(modal);
+  })
+}
+
+function generateCompliment() {
+  $.ajax({
+    url: compliment,
+    method: "GET"
+  }).then(function(response){
+    console.log(response.compliment);
+    let modal = $('<div>')
+    modal.addClass('modal')
+    modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+    $('.vh-100').prepend(modal);
+  })
+}
+
+
+
+
+// event listener for the modal button
+$("#insult").on("click", generateInsult);
+$("#flirt").on("click", generateCompliment);
+
 /* #endregion */
