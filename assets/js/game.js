@@ -92,8 +92,11 @@ function compareValue(card1, card2) {
         $.ajax({
             url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player1/add/?cards=" + winPile.join(","),
             method: "GET"
+        }).then(function(playerWin){
+            console.log(playerWin)
         })
-    } else if (parseInt(card1) = parseInt(card2)) {
+    } else if (parseInt(card1) === parseInt(card2)) {
+        console.log('TIE')
         $.ajax({
             url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player1/draw/bottom/?count=4",
             method: "GET"
@@ -101,20 +104,28 @@ function compareValue(card1, card2) {
             console.log(playerWar)
             for (let i = 0; i < playerWar.cards.length; i++) {
                 winPile.push(playerWar.cards[i].code)
+                console.log(playerWar.cards[i].code)
             }
+            playerDraw.attr('data-war-card', convertValue(playerWar.cards[3].value))
         })
         $.ajax({
             url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player2/draw/bottom/?count=4",
             method: "GET"
         }).then(function(enemyWar){
+            console.log(enemyWar)
             for (let i = 0; i < enemyWar.cards.length; i++) {
                 winPile.push(enemyWar.cards[i].code)
+                console.log(enemyWar.cards[i].code)
             }
+            enemyDraw.attr('data-war-card', convertValue(enemyWar.cards[3].value))
         })
+        compareValue(playerDraw.attr('data-war-card'), enemyDraw.attr('data-war-card'))
     } else {
         $.ajax({
             url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player2/add/?cards=" + winPile.join(","),
             method: "GET"
+        }).then(function(enemyWin){
+            console.log(enemyWin)
         })
     }
 }
