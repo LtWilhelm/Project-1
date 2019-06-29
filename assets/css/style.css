@@ -38,7 +38,7 @@ h1 {
 .body-area {
     width: 800px;
     /* box-shadow: 0 0 10px; */
-    margin: 2em auto;
+    margin: 2em auto 0;
     height: fit-content;
     display: flex;
 }
@@ -126,8 +126,9 @@ input {
     height: .75em;
     width: .75em;
     border-radius: .5em;
-    border: 1px groove black;
+    /* border: 1px groove black; */
     margin: auto 0;
+    box-shadow: 0 0 10px white;
 }
 
 #random {
@@ -195,4 +196,32 @@ strong {
 
 .modal-content button {
     margin-left: .5em;
+}
+
+#chat {
+    width: 25%;
+    min-width: 480px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin: 1em;
+    box-shadow: 0 0 10px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-color: darkgray;  
+    transform: translateY(-50%);  
+}
+
+#chat-history {
+    width: 95%;
+    margin: 1em auto;
+    padding: .5em;
+    height: 7em;
+    background-color: lightgray;
+    overflow-y: scroll;
+    box-shadow: 0 0 5px inset;
+}
+
+#chat-form {
+    padding: 1em;
 }
