@@ -6,7 +6,8 @@
     Card Game
         Do good, get praise/cookie
         Do poorly, get insulted
-            https://rapidapi.com/Lakerolmaker/api/insult-generator
+            https://evilinsult.com/api/#insults
+            https://complimentr.com/
         Random names -> Verify is Unique
         Dynamic Matchmaking
         Default Avatar generation
