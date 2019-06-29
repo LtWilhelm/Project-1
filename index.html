@@ -5,14 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Winder</title>
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-  
+    <div id="bg"></div>
+    <header>
+        <h1>Welcome to Winder!</h1>
+    </header>
 
+    <div class="body-area">
+        <div id="game-container">
+            <div id="game-list">
+                <div id="random">
+                    <button id="random-game">Find a Random Game</button>
+                </div><hr>
+                <div id="game-cards">
+                    <div class="game-card">
+                        <h2>game name</h2>
+                        <button class="join" data-value="game name" disabled>Join</button>
+                        <div class="indicator" style="background-color:red"></div>
+                    </div>
+                    <div class="game-card">
+                        <h2>game name 2</h2>
+                        <a href=""><button class="join" data-value="game name 2">Join</button>                    </a>
+                        <div class="indicator" style="background-color:green"></div>
+                    </div>
+                </div>
+            </div>
+            <button id="create-game">Create New Game</button>
+        </div>
+
+        <div id="all-chat">
+            <div id="all-chat-history">
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+                <p><strong style="color: indigo">Mason: </strong>Hello</p>
+            </div><hr>
+            <form id="all-chat-form">
+                <input type="text" id="all-chat-input">
+                <button id="all-chat-send">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- <div class="modal-content">
+        <h2>Test</h2><hr>
+        <input type="text" id="game-name">
+        <button id="create">Create</button>
+        <p id="error"></p>
+    </div> -->
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>

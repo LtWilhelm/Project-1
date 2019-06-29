@@ -1,35 +1,169 @@
-/* Modal Header */
-.modal-header {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-  }
-  
-  /* Modal Body */
-  .modal-body {padding: 2px 16px;}
-  
-  /* Modal Footer */
-  .modal-footer {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-  }
-  
-  /* Modal Content */
-  .modal-content {
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: green;
+    background: radial-gradient(white, black 99%);
+    font-family: 'Roboto', sans-serif;
+}
+
+#bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+    background-image: url(../images/felt-background.jpg);
+    opacity: .7;
+}
+
+small {
+    font-size: .75em;
+}
+
+header {
+    width: 100%;
+    height: 1.5em;
+    font-size: 3em;
+    box-shadow: 0 0 10px;
+    background-color: darkgray;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+.body-area {
+    width: 800px;
+    /* box-shadow: 0 0 10px; */
+    margin: 2em auto;
+    height: fit-content;
+    display: flex;
+}
+
+#game-list {
+    width: 100%;
+    height: 35em;
+    box-shadow: 0 0 10px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-color: darkgray;
+}
+
+#game-cards {
+    height: 450px;
+    overflow-y: scroll;
+    box-shadow: 0 0 5px inset;
+}
+
+#game-container {
+    margin: 1em;
+    width: 40%;
+    border: 1px;
+}
+
+#create-game {
+    margin: 1em 0;
     position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    border: 1px solid #888;
+    bottom: 0;
+    right: 0;
+    float: right;
+}
+
+.game-card {
+    margin: .5em auto;
+    background-color: darkgray;
+    width: 95%; 
+    box-shadow: 0 0 5px;
+    padding: 1em;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-image: url('../images/card-back.png');
+}
+
+.game-card h2 {
+    background-color: white;
+    padding: .25em;
+    border-radius: .5em;
+    box-shadow: 0 0 5px;
+    align-self: center;
+    font-weight: bold;
+}
+
+#all-chat {
+    width: 60%;
+    margin: 1em;
+    box-shadow: 0 0 10px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-color: darkgray;    
+}
+
+#all-chat-history {
+    width: 95%;
+    margin: 1em auto;
+    padding: .5em;
+    height: 30em;
+    background-color: lightgray;
+    overflow-y: scroll;
+    box-shadow: 0 0 5px inset;
+}
+
+#all-chat-form {
+    padding: 1em;
+}
+
+input {
     width: 80%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-    animation-name: animatetop;
-    animation-duration: 0.4s
-  }
-  
-  /* Add Animation */
-  @keyframes animatetop {
-    from {top: -300px; opacity: 0}
-    to {top: 0; opacity: 1}
-  }
+    padding: .5em;
+}
+
+.indicator {
+    height: .75em;
+    width: .75em;
+    border-radius: .5em;
+    border: 1px groove black;
+    margin: auto 0;
+}
+
+#random {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+#random-game {
+    margin: 1em 0;
+}
+
+button {
+    padding: .5em;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-image: url('../images/card-back.png');
+    box-shadow: 0 0 5px;
+    font-weight: bolder;
+    text-shadow: 0 0 3px white;
+}
+
+button:disabled {
+    background-image: unset;
+}
+
+button:hover:not(:disabled) {
+    box-shadow: 0 0 10px white;
+}
+
+button:active {
+    box-shadow: 0 0 5px inset;
+}
+
+strong {
+    font-weight: bold;
+}
+
+>>>>>>> dev

@@ -5,41 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Game Index</title>
+
+    <title>Mason's Game</title>
+    <!-- TITLE MUST INCLUED THE WORD 'Game' OR CODE WILL NOT WORK -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
 <body>
-<!-- Trigger/Open The Modal -->
-<button id="insultBtn">insult Modal</button>
 
-<!-- The Modal -->
-<div id="insultModal" class="modal" hiddens>
+    <div id="bg"></div>
+    <div>
+        <div id="enemy-cards">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div id="insult-body"></div>
-  </div>
+            <button class="p-5"></button>
+        </div>
 
-</div>
-
-<!-- compliment -->
-<button id="complimentBtn">compliment Modal</button>
-
-<div id="complimentModal" class="modal">
-
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <div id="compliment-body"></div>
-  </div>
-
-</div>
+    </div>
+    <div id="empty-draw" class="m-2">
+        <div id="enemy-draw"></div>
+        <div id="player-draw"></div>
+    </div>
+    <div class="m-2 fixed-bottom d-flex justify-content-between">
+        <button id="flirt" class="m-2">Flirt</button>
+        <button id="insult" class="m-2">Insult</button>
+        <div id="player-cards d-flex justify-content-center">
+            <button id="play-card" class="p-5 d-flex"></button>
+        </div>
+    </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>    <script src="./assets/js/script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="./assets/js/script.js"></script>
+    <script defer src="./assets/js/game.js"></script>
 </body>
 
 </html>
