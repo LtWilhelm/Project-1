@@ -4,28 +4,38 @@ let user;
 let enemy;
 let wins = 0;
 let losses = 0;
-let genderSelect = 'male';
 let loginModal = $('#hide-stuff');
 let formModal = $('#form-modal')
+
 let deckID;
 let draw;
 let winPile = [];
 
+let hiddenName = $('#hidden-name')
+let genderSelect;
 
+hiddenName.hide();
+formModal.hide();
+$('button').button('toggle')
+$('#new-user').on('click', function(){
+    loginModal.hide();
+    formModal.show();
+    $('#gender-selection').on('click', function(event){
+        event.preventDefault();
+        genderSelect = $('#form-modal label.active').attr('data-gender');
+        $.ajax({
+            url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
+            method: "GET"
+        }).then(function(response){
+            console.log(response)
+            formModal.hide();
+            hiddenName.show();
+            $('#username-given').html(response.name + " " + response.surname)
+            $('#avatar-given').attr('src', 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg')
+        })
+    })
+})
 
-// formModal.hide();
-// $('#male-gender').button('toggle')
-// $('#new-user').on('click', function(){
-//     loginModal.hide();
-//     formModal.show();
-//     $()
-//     $.ajax({
-//         url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
-//         method: "GET"
-//     }).then(function(response){
-//         console.log(response)
-//     })
-// })
 
 
 /* #region  firebase init */

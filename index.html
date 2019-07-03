@@ -63,19 +63,23 @@
             </div>
             <div>
           <form id="form-modal">
-                <div class="btn-group btn-group-toggle" class="m" data-toggle="gender">
-                    <label class="btn btn-outline-danger">
-                        <input type="radio" name="gender" id="male-gender" autocomplete="off"> Male
+                <div class="btn-group btn-group-toggle" data-toggle="button">
+                    <label class="btn btn-outline-danger" data-gender="male">
+                        <input type="radio" name="gender" id="male-gender" data-gender="male" autocomplete="off"> Male
                     </label>
-                    <label class="btn btn-outline-danger">
-                        <input type="radio" name="gender" id="female-gender" autocomplete="off"> Female
+                    <label class="btn btn-outline-danger" data-gender="female">
+                        <input type="radio" name="gender" id="female-gender" data-gender="female" autocomplete="off"> Female
                     </label>
-                    <label class="btn btn-outline-danger">
-                        <input type="radio" name="gender" id="unknown-gender" autocomplete="off"> No thanks
+                    <label class="btn btn-outline-danger" data-gender="female">
+                        <input type="radio" name="gender" id="unknown-gender" data-gender="female" autocomplete="off"> No thanks
                     </label>
                 </div>
                 <input type="submit" id="gender-selection">
             </form>
+            </div>
+            <div id="hidden-name">
+                <h2 class="text-center" id="username-given"></h2>
+                <img src="" id="avatar-given">
             </div>  
         </div>
     </div> -->
