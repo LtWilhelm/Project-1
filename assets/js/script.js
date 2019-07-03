@@ -27,6 +27,9 @@ $('#new-user').on('click', function(){
             hiddenName.show();
             $('#username-given').html(response.name + " " + response.surname)
             $('#avatar-given').attr('src', 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg')
+            $('#hide-modal').on('click', function(){
+            $('.cmodal').hide();
+            })
         })
     })
 })
