@@ -239,19 +239,7 @@ function generateCompliment() {
     modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
     $('.vh-100').prepend(modal);
   })
-}
-
-// Generate Avatar the last Gater
-function geenerateAvatar() {
-    $.ajax({
-        url: avatarAPI,
-        method: "GET"
-    }).then(function(response){
-        console.log(response);
-    
-
-    })
-}
+};
 
 // event listener for the modal button
 $("#insult").on("click", generateInsult);
