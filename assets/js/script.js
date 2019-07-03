@@ -83,21 +83,42 @@ function createDBListeners(callback) {
     } else if (!data.user1.status || !data.user2.status) {
       database.ref('wargame/games/' + gameName + '/isOpen').set(true);
     }
+
+    if (data[enemy].draw) {
+      $('#enemy-card-img').attr('src', data[enemy].cardImage);
+      $('#enemy-card').show('fast');
+    }
+    if (data[user].draw) {
+      $('#friendly-card-img').attr('src', data[user].cardImage);
+      $('#friendly-card').show('fast');
+    }
+
     let draw1 = data.user1.draw;
     let draw2 = data.user2.draw;
     if (draw1 && draw2) {
       let result = compareValue(convertValue(draw1), convertValue(draw2));
-      switch (result) {
-        case user:
-          addToPile(user);
-          break;
-        case enemy:
-          addToPile(enemy);
-          break;
-        case 'war':
-          war();
-      }
-      database.ref('wargame/games/' + gameName + '/' + user + '/draw').set('');
+      $('#friendly-card .card').toggleClass('flipped');
+      $('#enemy-card .card').toggleClass('flipped');
+
+      setTimeout(() => {
+        switch (result) {
+          case user:
+            addToPile(user);
+            break;
+          case enemy:
+            addToPile(enemy);
+            break;
+          case 'war':
+            war();
+        }        
+        database.ref('wargame/games/' + gameName + '/' + user + '/draw').set('');
+        $('#friendly-card .card').toggleClass('flipped');
+        $('#enemy-card .card').toggleClass('flipped');
+  
+        $('#friendly-card').hide('fast');
+        $('#enemy-card').hide('fast');
+
+      }, 1000);
     }
   });
   database.ref('wargame/games/' + gameName + '/chat').on('child_added', function (childSnapshot) {
@@ -142,6 +163,7 @@ function addToPile(pileName) {
     console.log(response);
     winPile = [];
   });
+  draw = '';
 }
 
 function createDeck() {
@@ -219,14 +241,16 @@ function createGame(name) {
           wins: wins,
           losses: losses,
           status: false,
-          draw: ''
+          draw: '',
+          cardImage: ''
         },
         user2: {
           name: '',
           wins: wins,
           losses: losses,
           status: false,
-          draw: ''
+          draw: '',
+          cardImage: ''
         }
       });
       $('.modal').remove();
@@ -310,15 +334,19 @@ $('#chat-send').on('click', function () {
 });
 
 $('#play-card').on('click', function () {
-  $.ajax({
-    url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/" + user + "/draw/bottom/?cards=",
-    method: "GET"
-  }).then(function (response) {
-    console.log(response);
-    draw = response.cards[0].code
-    database.ref('wargame/games/' + gameName + '/' + user + '/draw').set(response.cards[0].value)
-  })
-})
+  if (!draw) {
+    $.ajax({
+      url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/" + user + "/draw/bottom/?cards=",
+      method: "GET"
+    }).then(function (response) {
+      console.log(response);
+      draw = response.cards[0].code
+      database.ref('wargame/games/' + gameName + '/' + user + '/cardImage').set(response.cards[0].image)
+      database.ref('wargame/games/' + gameName + '/' + user + '/draw').set(response.cards[0].value)
+
+    })
+  }
+});
 
 /* #endregion */
 
@@ -350,7 +378,7 @@ function generateCompliment() {
     console.log(response.compliment);
     let modal = $('<div>')
     modal.addClass('cmodal')
-    modal.html('<form class="cmodal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+    modal.html('<div class="cmodal-content"><h2>' + response.compliment + '</h2></div>');
     $('body').prepend(modal);
   })
 }
@@ -426,3 +454,8 @@ function compareValue(card1, card2) {
 
 
 /* #endregion */
+
+$('.card').on('click', function(){
+  $(this).toggleClass('flipped');
+  console.log('hello')
+})
