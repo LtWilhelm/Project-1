@@ -241,8 +241,8 @@ function generateInsult() {
   }).then(function(response){
     console.log(response);
     let modal = $('<div>')
-    modal.addClass('modal')
-    modal.html('<div class="modal-content"><h2>' + response + '</h2></div>');
+    modal.addClass('cmodal')
+    modal.html('<div class="cmodal-content"><h2>' + response + '</h2></div>');
     $('body').prepend(modal);
   })
 }
@@ -254,9 +254,9 @@ function generateCompliment() {
   }).then(function(response){
     console.log(response.compliment);
     let modal = $('<div>')
-    modal.addClass('modal')
-    modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
-    $('.vh-100').prepend(modal);
+    modal.addClass('cmodal')
+    modal.html('<form class="cmodal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+    $('body').prepend(modal);
   })
 }
 

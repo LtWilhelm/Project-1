@@ -167,7 +167,7 @@ strong {
     font-weight: bold;
 }
 
-.modal {
+.cmodal {
     position: fixed;
     z-index: 10;
     left: 0;
@@ -177,7 +177,7 @@ strong {
     height: 100%;
 }
 
-.modal-content {
+.cmodal-content {
     background-color: darkgray;
     width: 350px;
     position: relative;
@@ -190,11 +190,11 @@ strong {
     box-shadow: 0 0 10px;
 }
 
-.modal-content input {
+.cmodal-content input {
     width: 70%;
 }
 
-.modal-content button {
+.cmodal-content button {
     margin-left: .5em;
 }
 
