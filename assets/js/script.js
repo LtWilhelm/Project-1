@@ -1,5 +1,4 @@
 let gameName;
-let gameList = ['placeholder'];
 let userName = 'test';
 let user;
 let wins = 0;
@@ -20,6 +19,7 @@ firebase.initializeApp(firebaseConfig);
 
 let database = firebase.database();
 
+/* #endregion */
 
 // TODO push new users to firebase (wargame/users)
 
@@ -30,7 +30,7 @@ database.ref('wargame/chat').on('child_added', function (childSnapshot) {
     let ch = document.getElementById('all-chat-history')
     if (ch) {
         $('#all-chat-history').append(p);
-        ch.scrollTop = ch.scrollHeight;    
+        ch.scrollTop = ch.scrollHeight;
     }
 });
 
@@ -40,20 +40,26 @@ initializeGame();
 /* #region  func dec */
 function initializeGame() {
     if (document.title.includes('Game')) {
-        name = sessionStorage.name;
         gameName = sessionStorage.game;
+        userName = sessionStorage.name;
+        user = sessionStorage.user;
         createDBListeners();
-        console.log('works');
     }
 }
 
 function createDBListeners() {
     database.ref('wargame/games/' + gameName).on('value', function (snapshot) {
         let data = snapshot.val();
+        deckID = data.deckID;
         if (data.user1.status && data.user2.status) {
             database.ref('wargame/games/' + gameName + '/isOpen').set(false);
         } else if (!data.user1.status || !data.user2.status) {
             database.ref('wargame/games/' + gameName + '/isOpen').set(true);
+        }
+        let draw1 = data.user1.draw;
+        let draw2 = data.user2.draw;
+        if (draw1 && draw2) {
+            console.log(compareValue(convertValue(draw1), convertValue(draw2)));
         }
     });
     database.ref('wargame/games/' + gameName + '/chat').on('child_added', function (childSnapshot) {
@@ -62,7 +68,7 @@ function createDBListeners() {
         let p = $('<p>').html(data);
         let ch = document.getElementById('chat-history')
         $('#chat-history').append(p);
-        ch.scrollTop = ch.scrollHeight;    
+        ch.scrollTop = ch.scrollHeight;
     });
 }
 
@@ -95,7 +101,7 @@ function findGame() {
     database.ref('wargame/games').once('value').then(function (snapshot) {
         let data = snapshot.val();
         console.log(data);
-        
+
         for (const prop in data) {
             if (data.hasOwnProperty(prop)) {
                 const element = data[prop];
@@ -111,7 +117,7 @@ function findGame() {
 
 function createGame(name) {
     gameName = name;
-    
+
     database.ref('wargame/games/' + gameName).once('value').then(function (snapshot) {
         console.log(snapshot.val());
         if (!snapshot.val() && gameName !== 'placeholder') {
@@ -119,17 +125,20 @@ function createGame(name) {
                 isOpen: true,
                 gameName: gameName,
                 chat: '',
+                deckID: '',
                 user1: {
                     name: '',
                     wins: wins,
                     losses: losses,
-                    status: false
+                    status: false,
+                    draw: ''
                 },
                 user2: {
                     name: '',
                     wins: wins,
                     losses: losses,
-                    status: false
+                    status: false,
+                    draw: ''
                 }
             });
             $('.modal').remove();
@@ -174,8 +183,8 @@ function creatGameCards() {
 /* #region  click handlers */
 $('#create-game').on('click', function () {
     let modal = $('<div>')
-    modal.addClass('modal')
-    modal.html('<form class="modal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+    modal.addClass('cmodal')
+    modal.html('<form class="cmodal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
     $('body').append(modal);
 });
 
@@ -200,7 +209,7 @@ $('#all-chat-send').on('click', function () {
     event.preventDefault();
     let input = $('#all-chat-input')
     if (input.val())
-    database.ref('wargame/chat').push('<strong>' + userName + ':</strong> ' + input.val());
+        database.ref('wargame/chat').push('<strong>' + userName + ':</strong> ' + input.val());
     input.val('');
 });
 
@@ -208,41 +217,53 @@ $('#chat-send').on('click', function () {
     event.preventDefault();
     let input = $('#chat-input')
     if (input.val())
-    database.ref('wargame/games/' + gameName + '/chat').push('<strong>' + userName + ':</strong> ' + input.val());
+        database.ref('wargame/games/' + gameName + '/chat').push('<strong>' + userName + ':</strong> ' + input.val());
     input.val('');
 });
+
+$('#play-card').on('click', function() {
+    $.ajax({
+        url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/" + user + "/draw/?cards=",
+        method: "GET"
+    }).then(function (draw) {
+        console.log(draw);
+        database.ref('wargame/games/' + gameName + '/' + user + '/draw').set(draw.cards[0].value)
+    })
+})
+
 /* #endregion */
 
 
+/* #region  insult/flirt */
 // variables 
 let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
 let compliment = "https://complimentr.com/api";
 
 // create a function for insults AJAX request
 function generateInsult() {
-  $.ajax({
-    url: corsInsultApi,
-    method: "GET"
-  }).then(function(response){
-    console.log(response);
-    let modal = $('<div>')
-    modal.addClass('cmodal')
-    modal.html('<div class="cmodal-content"><h2>' + response + '</h2></div>');
-    $('body').prepend(modal);
-  })
+    $.ajax({
+        url: corsInsultApi,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        let modal = $('<div>')
+        modal.addClass('cmodal')
+        modal.html('<div class="cmodal-content"><h2>' + response + '</h2></div>');
+        $('body').prepend(modal);
+    })
 }
 
 function generateCompliment() {
-  $.ajax({
-    url: compliment,
-    method: "GET"
-  }).then(function(response){
-    console.log(response.compliment);
-    let modal = $('<div>')
-    modal.addClass('cmodal')
-    modal.html('<form class="cmodal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
-    $('body').prepend(modal);
-  })
+    $.ajax({
+        url: compliment,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response.compliment);
+        let modal = $('<div>')
+        modal.addClass('cmodal')
+        modal.html('<form class="cmodal-content"><h2>Create new game:</h2><hr><input type="text" id="game-name" placeholder="Give it a name..."><button id="create">Create</button><small id="error"></small></form>');
+        $('body').prepend(modal);
+    })
 }
 
 
@@ -251,5 +272,79 @@ function generateCompliment() {
 // event listener for the modal button
 $("#insult").on("click", generateInsult);
 $("#flirt").on("click", generateCompliment);
+
+/* #endregion */
+
+/* #region  game functionality */
+let playerDraw = $('#player-draw')
+let enemyDraw = $('#enemy-draw')
+let deckID;
+
+function drawHand() {
+    let queryURL = "https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=26"
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (draw) {
+        console.log(draw)
+        let pile1 = []
+        for (let x = 0; x < draw.cards.length; x++) {
+            console.log(draw.cards[x].code);
+            pile1.push(draw.cards[x].code);
+        }
+        $.ajax({
+            url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/" + user + "/add/?cards=" + pile1.join(","),
+            method: "GET"
+        }).then(function (player1) {
+
+            console.log(player1)
+        })
+    })
+}
+
+if (!deckID) {
+    $.ajax({
+        url: "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
+        method: "GET"
+    }).then(function (response) {
+        console.log(response)
+        deckID = response.deck_id;
+        database.ref('wargame/games/' + gameName + '/deckID').set(deckID);
+        drawHand();
+    })
+} else {
+    drawHand();
+}
+
+function convertValue(card) {
+    switch (card) {
+        case 'ACE':
+            return 14;
+            break;
+        case 'KING':
+            return 13;
+            break;
+        case 'QUEEN':
+            return 12;
+            break;
+        case 'JACK':
+            return 11;
+            break;
+        default:
+            return parseInt(card);
+            break;
+    }
+}
+
+function compareValue(card1, card2) {
+    if (parseInt(card1) >= parseInt(card2)) {
+        console.log('Player 1 wins round', card1, card2)
+        return 'user1';
+    } else {
+        console.log('player 2 wins round', card1, card2)
+        return 'user2';
+    }
+}
+
 
 /* #endregion */
