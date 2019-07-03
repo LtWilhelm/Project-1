@@ -9,9 +9,11 @@ let loginModal = $('#hide-stuff');
 let formModal = $('#form-modal')
 
 formModal.hide();
+$('#male-gender').button('toggle')
 $('#new-user').on('click', function(){
     loginModal.hide();
     formModal.show();
+    $()
     $.ajax({
         url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
         method: "GET"
