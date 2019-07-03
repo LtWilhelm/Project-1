@@ -6,7 +6,6 @@ let wins = 0;
 let losses = 0;
 let corsInsultApi = "https://cors-anywhere.herokuapp.com/" + "https://evilinsult.com/generate_insult.php?lang=en";
 let compliment = "https://complimentr.com/api";
-let avatarAPI = "https://cors-anywhere.herokuapp.com/" + "https://avatars.dicebear.com/v2/:sprites/:seed.svg"
 
 /* #region  firebase init */
 let firebaseConfig = {
