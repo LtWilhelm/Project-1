@@ -4,6 +4,21 @@ let userName = 'test';
 let user;
 let wins = 0;
 let losses = 0;
+let genderSelect = 'male';
+let loginModal = $('#hide-stuff');
+let formModal = $('#form-modal')
+
+formModal.hide();
+$('#new-user').on('click', function(){
+    loginModal.hide();
+    formModal.show();
+    $.ajax({
+        url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
+        method: "GET"
+    }).then(function(response){
+        console.log(response)
+    })
+})
 
 
 /* #region  firebase init */

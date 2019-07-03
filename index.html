@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- asdf -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +22,8 @@
             <div id="game-list">
                 <div id="random">
                     <button id="random-game">Find a Random Game</button>
-                </div><hr>
+                </div>
+                <hr>
                 <div id="game-cards">
                     <div class="game-card">
                         <h2>game name</h2>
@@ -30,7 +32,7 @@
                     </div>
                     <div class="game-card">
                         <h2>game name 2</h2>
-                        <a href=""><button class="join" data-value="game name 2">Join</button>                    </a>
+                        <a href=""><button class="join" data-value="game name 2">Join</button> </a>
                         <div class="indicator" style="background-color:green"></div>
                     </div>
                 </div>
@@ -40,7 +42,8 @@
 
         <div id="all-chat">
             <div id="all-chat-history">
-            </div><hr>
+            </div>
+            <hr>
             <form id="all-chat-form">
                 <input type="text" id="all-chat-input">
                 <button id="all-chat-send">Send</button>
@@ -50,17 +53,34 @@
 
     <div class="modal">
         <div class="modal-content" id="login-modal">
-            <h2>Create new account or sign in</h2><hr>
-            <button id="new-user">Create Account</button>
-            <button id="sign-in">Sign in</button>
-            <p id="error"></p>
+            <div id="hide-stuff">
+                <h2>Create new account or sign in</h2>
+                <hr>
+                <button id="new-user">Create Account</button>
+                <button id="sign-in">Sign in</button>
+                <p id="error"></p>
+            </div>
+            <form id="form-modal">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="gender" id="male-gender" autocomplete="off"> Male
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="gender" id="female-gender" autocomplete="off"> Female
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="gender" id="unknown-gender" autocomplete="off"> No thanks
+                    </label>
+                </div>
+            </form>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>    <script src="./assets/js/script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
 </html>
