@@ -6,20 +6,22 @@ let losses = 0;
 let genderSelect = 'male';
 let loginModal = $('#hide-stuff');
 let formModal = $('#form-modal')
+let deckID;
 
-formModal.hide();
-$('#male-gender').button('toggle')
-$('#new-user').on('click', function(){
-    loginModal.hide();
-    formModal.show();
-    $()
-    $.ajax({
-        url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
-        method: "GET"
-    }).then(function(response){
-        console.log(response)
-    })
-})
+
+// formModal.hide();
+// $('#male-gender').button('toggle')
+// $('#new-user').on('click', function(){
+//     loginModal.hide();
+//     formModal.show();
+//     $()
+//     $.ajax({
+//         url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
+//         method: "GET"
+//     }).then(function(response){
+//         console.log(response)
+//     })
+// })
 
 
 /* #region  firebase init */
@@ -60,14 +62,17 @@ function initializeGame() {
         gameName = sessionStorage.game;
         userName = sessionStorage.name;
         user = sessionStorage.user;
-        createDBListeners();
+        createDBListeners(createDeck);
     }
 }
 
-function createDBListeners() {
+function createDBListeners(callback) {
+    database.ref('wargame/games/' + gameName + '/deckID').once('value').then(function (snapshot) {
+        deckID = snapshot.val();
+        callback();
+    });
     database.ref('wargame/games/' + gameName).on('value', function (snapshot) {
         let data = snapshot.val();
-        deckID = data.deckID;
         if (data.user1.status && data.user2.status) {
             database.ref('wargame/games/' + gameName + '/isOpen').set(false);
         } else if (!data.user1.status || !data.user2.status) {
@@ -87,6 +92,22 @@ function createDBListeners() {
         $('#chat-history').append(p);
         ch.scrollTop = ch.scrollHeight;
     });
+}
+
+function createDeck() {
+    if (!deckID) {
+        $.ajax({
+            url: "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
+            method: "GET"
+        }).then(function (response) {
+            console.log(response)
+            deckID = response.deck_id;
+            database.ref('wargame/games/' + gameName + '/deckID').set(deckID);
+            drawHand();
+        })
+    } else {
+        drawHand();
+    }        
 }
 
 function joinGame() {
@@ -295,7 +316,6 @@ $("#flirt").on("click", generateCompliment);
 /* #region  game functionality */
 let playerDraw = $('#player-draw')
 let enemyDraw = $('#enemy-draw')
-let deckID;
 
 function drawHand() {
     let queryURL = "https://deckofcardsapi.com/api/deck/" + deckID + "/draw/?count=26"
@@ -319,19 +339,6 @@ function drawHand() {
     })
 }
 
-if (!deckID) {
-    $.ajax({
-        url: "https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1",
-        method: "GET"
-    }).then(function (response) {
-        console.log(response)
-        deckID = response.deck_id;
-        database.ref('wargame/games/' + gameName + '/deckID').set(deckID);
-        drawHand();
-    })
-} else {
-    drawHand();
-}
 
 function convertValue(card) {
     switch (card) {
@@ -354,12 +361,49 @@ function convertValue(card) {
 }
 
 function compareValue(card1, card2) {
-    if (parseInt(card1) >= parseInt(card2)) {
-        console.log('Player 1 wins round', card1, card2)
+    if (parseInt(card1) > parseInt(card2)) {
+        console.log('Player 1 win')
         return 'user1';
+        // $.ajax({
+        //     url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player1/add/?cards=" + winPile.join(","),
+        //     method: "GET"
+        // }).then(function(playerWin){
+        //     console.log(playerWin)
+        // })
+    } else if (parseInt(card1) === parseInt(card2)) {
+        console.log('TIE')
+        return 'war';
+        // $.ajax({
+        //     url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player1/draw/bottom/?count=4",
+        //     method: "GET"
+        // }).then(function(playerWar){
+        //     console.log(playerWar)
+        //     for (let i = 0; i < playerWar.cards.length; i++) {
+        //         winPile.push(playerWar.cards[i].code)
+        //         console.log(playerWar.cards[i].code)
+        //     }
+        //     playerDraw.attr('data-war-card', convertValue(playerWar.cards[3].value))
+        // })
+        // $.ajax({
+        //     url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player2/draw/bottom/?count=4",
+        //     method: "GET"
+        // }).then(function(enemyWar){
+        //     console.log(enemyWar)
+        //     for (let i = 0; i < enemyWar.cards.length; i++) {
+        //         winPile.push(enemyWar.cards[i].code)
+        //         console.log(enemyWar.cards[i].code)
+        //     }
+        //     enemyDraw.attr('data-war-card', convertValue(enemyWar.cards[3].value))
+        // })
+        // compareValue(playerDraw.attr('data-war-card'), enemyDraw.attr('data-war-card'))
     } else {
-        console.log('player 2 wins round', card1, card2)
         return 'user2';
+        // $.ajax({
+        //     url: "https://deckofcardsapi.com/api/deck/" + deckID + "/pile/player2/add/?cards=" + winPile.join(","),
+        //     method: "GET"
+        // }).then(function(enemyWin){
+        //     console.log(enemyWin)
+        // })
     }
 }
 
