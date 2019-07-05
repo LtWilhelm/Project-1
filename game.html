@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Mason's Game</title>
+    <title>Game</title>
     <!-- TITLE MUST INCLUED THE WORD 'Game' OR CODE WILL NOT WORK -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/reset.css">
@@ -16,15 +16,7 @@
 <body>
     <div class="vh-100">
         <div id="bg"></div>
-        <div>
-            <div id="enemy-cards">
-                <button class="p-5"></button>
-            </div>
-        </div>
-        <div id="empty-draw" class="m-2">
-            <div id="enemy-draw"></div>
-            <div id="player-draw"></div>
-        </div>
+            <div id="enemy-pile"></div>
         <div class="m-2 fixed-bottom d-flex justify-content-between">
             <button id="flirt" class="m-2">Flirt</button>
             <div id="player-cards d-flex justify-content-center">
@@ -34,7 +26,7 @@
 
         </div>
     </div>
-    <div id="chat">
+    <div id="chat" hidden>
         <h2 id="chat-header">Chat</h2>
         <div id="chat-history"></div>
         <hr>
@@ -44,12 +36,27 @@
         </form>
     </div>
 
+    <div id="card-area">
+            <div class="ccontainer" id="friendly-card" style="display: none">
+                    <div class="card flipped">
+                      <div class="front"></div>
+                      <img src="https://deckofcardsapi.com/static/img/QH.png" alt="card" class="back" id="friendly-card-img">
+                    </div>
+                  </div>
+            <div class="ccontainer" id="enemy-card" style="display: none">
+                    <div class="card flipped">
+                      <div class="front"></div>
+                      <img src="https://deckofcardsapi.com/static/img/QH.png" alt="card" class="back" id="enemy-card-img">
+                    </div>
+                  </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
     <script src="./assets/js/script.js"></script>
-    <script defer src="./assets/js/game.js"></script>
+    <!-- <script defer src="./assets/js/game.js"></script> -->
 </body>
 
 </html>
