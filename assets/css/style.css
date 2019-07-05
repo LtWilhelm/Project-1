@@ -6,7 +6,17 @@
 
 body {
     background-color: green;
+    background: radial-gradient(white, black 99%);
     font-family: 'Roboto', sans-serif;
+}
+
+#bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+    background-image: url(../images/felt-background.jpg);
+    opacity: .7;
 }
 
 small {
@@ -28,7 +38,7 @@ h1 {
 .body-area {
     width: 800px;
     /* box-shadow: 0 0 10px; */
-    margin: 2em auto;
+    margin: 2em auto 0;
     height: fit-content;
     display: flex;
 }
@@ -116,8 +126,9 @@ input {
     height: .75em;
     width: .75em;
     border-radius: .5em;
-    border: 1px groove black;
+    /* border: 1px groove black; */
     margin: auto 0;
+    box-shadow: 0 0 10px white;
 }
 
 #random {
@@ -140,6 +151,7 @@ button {
     text-shadow: 0 0 3px white;
 }
 
+
 button:disabled {
     background-image: unset;
 }
@@ -156,9 +168,9 @@ strong {
     font-weight: bold;
 }
 
-.modal {
+.cmodal {
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.4);
@@ -166,7 +178,7 @@ strong {
     height: 100%;
 }
 
-.modal-content {
+.cmodal-content {
     background-color: darkgray;
     width: 350px;
     position: relative;
@@ -179,10 +191,153 @@ strong {
     box-shadow: 0 0 10px;
 }
 
-.modal-content input {
+.cmodal-content input {
     width: 70%;
 }
 
-.modal-content button {
+.cmodal-content button {
     margin-left: .5em;
 }
+
+#chat {
+    width: 25%;
+    min-width: 480px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    margin: 1em;
+    box-shadow: 0 0 10px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-color: darkgray;  
+    transform: translateY(-50%);  
+}
+
+#chat-history {
+    width: 95%;
+    margin: 1em auto;
+    padding: .5em;
+    height: 7em;
+    background-color: lightgray;
+    overflow-y: scroll;
+    box-shadow: 0 0 5px inset;
+}
+
+#chat-form {
+    padding: 1em;
+}
+
+#login-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#login-modal button {
+    margin: .5em auto;
+}
+
+#login-modal h2 {
+    align-self: center;
+}
+
+#login-modal hr {
+    width: 100%;
+}
+
+#card-area {
+    width: 17em;
+    height: 12em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#friendly-card {
+    position: absolute;
+    left: 0;
+}
+
+#enemy-card {
+    position: absolute;
+    right: 0;
+}
+
+.card {
+    background-color: darkgray;
+    width: 8em; 
+    height: 12em;
+    box-shadow: 0 0 5px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-image: url('../images/card-back.png');
+    -webkit-transition: -webkit-transform 0.4s;
+    transition: transform 0.4s;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+  
+  .card.flipped {
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+  }
+  
+  .card .front,
+  .card .back {
+    display: block;
+    color: white;
+    text-align: center;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    
+  }
+
+  .back {
+      width: 8em;
+      height: 12em;
+      transform: translate(-.5em, -.5em);
+      border-radius: 1em;
+      border: .5em white solid;  
+  }
+
+  #enemy-pile {
+    background-color: darkgray;
+    width: 8em; 
+    height: 12em;
+    box-shadow: 0 0 5px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-image: url('../images/card-back.png');
+    margin: 0;
+    position: fixed;
+    top: -5em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  #play-card {
+    background-color: darkgray;
+    width: 8em; 
+    height: 12em;
+    box-shadow: 0 0 5px;
+    border-radius: 1em;
+    border: .5em white solid;
+    background-image: url('../images/card-back.png');
+    margin: 0;
+    position: fixed;
+    bottom: -5em;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  #play-card:hover {
+    box-shadow: 0 0 10px white;
+
+  }
