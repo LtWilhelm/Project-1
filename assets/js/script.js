@@ -16,7 +16,7 @@ let genderSelect;
 
 hiddenName.hide();
 formModal.hide();
-$('button').button('toggle')
+// $('button').button('toggle')
 $('#new-user').on('click', function(){
     loginModal.hide();
     formModal.show();
@@ -32,7 +32,11 @@ $('#new-user').on('click', function(){
             hiddenName.show();
             $('#username-given').html(response.name + " " + response.surname)
             $('#avatar-given').attr('src', 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg')
-        })
+            database.ref("wargame/users").push({
+                name: response.name + " " + response.surname, 
+                avatar: 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg'
+            });
+        }) 
     })
 })
 
