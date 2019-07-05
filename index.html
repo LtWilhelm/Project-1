@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Winder</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
@@ -62,31 +63,36 @@
                 <p id="error"></p>
             </div>
             <div>
-          <form id="form-modal">
-                <div class="btn-group btn-group-toggle" data-toggle="button">
-                    <label class="btn btn-outline-danger" data-gender="male">
-                        <input type="radio" name="gender" id="male-gender" data-gender="male" autocomplete="off"> Male
-                    </label>
-                    <label class="btn btn-outline-danger" data-gender="female">
-                        <input type="radio" name="gender" id="female-gender" data-gender="female" autocomplete="off"> Female
-                    </label>
-                    <label class="btn btn-outline-danger" data-gender="female">
-                        <input type="radio" name="gender" id="unknown-gender" data-gender="female" autocomplete="off"> No thanks
-                    </label>
-                </div>
-                <input type="submit" id="gender-selection">
-            </form>
+                <form id="form-modal">
+                    <div class="btn-group btn-group-toggle" data-toggle="button">
+                        <label class="btn btn-outline-danger" data-gender="male">
+                            <input type="radio" name="gender" id="male-gender" data-gender="male" autocomplete="off">
+                            Male
+                        </label>
+                        <label class="btn btn-outline-danger" data-gender="female">
+                            <input type="radio" name="gender" id="female-gender" data-gender="female"
+                                autocomplete="off"> Female
+                        </label>
+                        <label class="btn btn-outline-danger" data-gender="female">
+                            <input type="radio" name="gender" id="unknown-gender" data-gender="female"
+                                autocomplete="off"> No thanks
+                        </label>
+                    </div>
+                    <input type="submit" id="gender-selection">
+                </form>
             </div>
             <div id="hidden-name">
                 <h2 class="text-center" id="username-given"></h2>
                 <img src="" id="avatar-given">
-            </div>  
+            </div>
         </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
     <script src="./assets/js/script.js"></script>
