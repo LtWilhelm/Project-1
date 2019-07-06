@@ -40,6 +40,12 @@ $('#new-user').on('click', function(){
     })
 })
 
+$(document).ready(function(){
+  $("#close").click(function(){ 
+  $(".cmodal").remove();
+  });
+});
+
 
 
 /* #region  firebase init */
