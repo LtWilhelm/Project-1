@@ -341,3 +341,9 @@ strong {
     box-shadow: 0 0 10px white;
 
   }
+
+  #close {
+      position: relative;
+      left: 112px;
+      top: 10px;
+  }
