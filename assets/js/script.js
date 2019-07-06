@@ -23,21 +23,28 @@ if (!document.title.includes('Game')) {
 $('#new-user').on('click', function () {
     loginModal.hide();
     formModal.show();
+    $('#form-modal label').on('click', function(){
+      $('#form-modal label.active').toggleClass('active');
+    });
     $('#gender-selection').on('click', function (event) {
         event.preventDefault();
         genderSelect = $('#form-modal label.active').attr('data-gender');
         $.ajax({
-            url: 'https://uinames.com/api/?region=united+states&gender=' + genderSelect,
+            url: 'https://cors-anywhere.herokuapp.com/https://uinames.com/api/?region=united+states&gender=' + genderSelect,
             method: "GET"
         }).then(function (response) {
             console.log(response)
             formModal.hide();
             hiddenName.show();
-            $('#username-given').html(response.name + " " + response.surname)
-            $('#avatar-given').attr('src', 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg')
+            userName = response.name + " " + response.surname;
+            avatar = 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg'
+            $('#username-given').html(userName)
+            $('#avatar-given').attr('src', avatar)
+            sessionStorage.setItem('name', userName);
+            sessionStorage.setItem('avatar', avatar);
             database.ref("wargame/users").push({
-                name: response.name + " " + response.surname,
-                avatar: 'https://avatars.dicebear.com/v2/' + genderSelect + '/' + response.name + '.svg'
+                name: userName,
+                avatar: avatar
             });
         })
     })
@@ -61,6 +68,8 @@ $('#sign-in').on('click', function () {
                         sessionStorage.setItem('name', userName);
                         sessionStorage.setItem('avatar', avatar);
                         $('.cmodal').hide('fast')
+                        $('#user-name-display').text(userName);
+                        $('#avatar-display').attr('src', avatar);                    
                     } else {
                         $('#error').text("Username doesn't exist, please type a valid username");
                     }
@@ -72,7 +81,9 @@ $('#sign-in').on('click', function () {
 
 $(document).ready(function(){
   $("#close").click(function(){ 
-  $(".cmodal").remove();
+    $(".cmodal").remove();
+    $('#user-name-display').text(userName);
+    $('#avatar-display').attr('src', avatar);
   });
 });
 
@@ -115,9 +126,13 @@ function initializeGame() {
     if (document.title.includes('Game')) {
         gameName = sessionStorage.game;
         userName = sessionStorage.name;
-        avatar = sessionStorage.avatart;
+        avatar = sessionStorage.avatar;
         user = sessionStorage.user;
         enemy = sessionStorage.enemy;
+        database.ref('wargame/games/' + gameName + '/' + user + '/avatar').set(avatar)
+        database.ref('wargame/games/' + gameName + '/' + user + '/username').set(userName)
+        $('#user-name-display').text(userName);
+        $('#avatar-display').attr('src', avatar);      
         createDBListeners(createDeck);
     }
 }
@@ -157,6 +172,11 @@ function createDBListeners(callback) {
             setTimeout(() => {
                 $('.cmodal').remove();
             }, 5000);
+        }
+        
+        if (data[enemy].status) {
+          $('#enemy-name-display').text(data[enemy].username);
+          $('#enemy-avatar-display').attr('src', data[enemy].avatar);      
         }
 
         let draw1 = data.user1.draw;
