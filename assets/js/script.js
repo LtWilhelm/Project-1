@@ -1,5 +1,6 @@
 let gameName;
 let userName = 'test';
+let avatar;
 let user;
 let enemy;
 let wins = 0;
@@ -39,6 +40,33 @@ $('#new-user').on('click', function(){
         }) 
     })
 })
+$('#sign-in').on('click', function(){
+    $('#login-modal').html('<div><form><input type="text" name="username" id="username-input" placeholder="Name..."><button id="username-submit">Login</button></form><small id="error"></small></div>');
+    $('#username-submit').on('click', function(){
+        event.preventDefault();
+        database.ref('wargame/users').once('value').then(function(snapshot){
+            let data = snapshot.val()
+            console.log(snapshot.val());
+            let checkName = $('#username-input').val();
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const element = data[key];
+                    console.log(element.name);
+                    if (element.name.toLowerCase() === checkName.toLowerCase()){
+                        userName = checkName;
+                        avatar = element.avatar;
+                        console.log(userName, avatar);
+                        sessionStorage.setItem('name', userName);
+                        sessionStorage.setItem('avatar', avatar);
+                        $('.cmodal').hide('fast')
+                    } else {
+                        $('#error').text("Username doesn't exist, please type a valid username");
+                    }
+                }
+            }
+        });
+    });
+  });
 
 $(document).ready(function(){
   $("#close").click(function(){ 
@@ -85,6 +113,7 @@ function initializeGame() {
   if (document.title.includes('Game')) {
     gameName = sessionStorage.game;
     userName = sessionStorage.name;
+    avatar = sessionStorage.avatart;
     user = sessionStorage.user;
     enemy = sessionStorage.enemy;
     createDBListeners(createDeck);
